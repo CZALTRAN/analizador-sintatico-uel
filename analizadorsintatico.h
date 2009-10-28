@@ -22,7 +22,7 @@ private:
     NoType * cs_bloco();
 
     //Sub funções de analize
-    NoType * sub_declaracoesRotulos();
+    NoType * sub_declaracoesVariavel();
     //Funções auxiliares
     void erro(int linha, QString msg);
     void erro(QString msg);
