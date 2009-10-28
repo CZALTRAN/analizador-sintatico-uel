@@ -66,7 +66,6 @@ NoType * AnalizadorSintatico::cs_bloco()
 {
     NoType * retorno = new NoType("BLOCO",nvLexico,false);
 
-    retorno->insereFilho( this->sub_declaracoesRotulos() );
     //retorno->insereFilho( this->parteDeclaracoesVariaveis() );
     //retorno->insereFilho( this->parteDeclaracoesSubRotinas() );
 
@@ -81,56 +80,7 @@ NoType * AnalizadorSintatico::cs_bloco()
 
     return retorno;
 }
-NoType * AnalizadorSintatico::sub_declaracoesRotulos()
-{
-        NoType* retorno = new NoType( "<PARTE_DECLARACOES_ROTULOS>", this->nivelLexicoAtual, false );
 
-        if( this->iteradorSaidaAnalisadorLexico->second.token == "label" )
-        {
-                _parteDeclaracoesRotulos->insereFilho( this->iteradorSaidaAnalisadorLexico->second.token, this->nivelLexicoAtual, true );
-                ++this->iteradorSaidaAnalisadorLexico;
-
-                if( this->iteradorSaidaAnalisadorLexico->second.classificacao == "NUMERO" )
-                {
-                        _parteDeclaracoesRotulos->insereFilho( this->numero() );
-
-                        while( this->iteradorSaidaAnalisadorLexico->second.token == "," )
-                        {
-                                _parteDeclaracoesRotulos->insereFilho( this->iteradorSaidaAnalisadorLexico->second.token, this->nivelLexicoAtual, true );
-                                ++this->iteradorSaidaAnalisadorLexico;
-
-                                if( this->iteradorSaidaAnalisadorLexico->second.classificacao == "NUMERO" )
-                                {
-                                        _parteDeclaracoesRotulos->insereFilho( this->numero() );
-                                }
-                                else
-                                {
-                                        LogErros::getInstancia().insereErro( this->iteradorSaidaAnalisadorLexico->second.linha, "Esperado: numero apos ','" );
-                                }
-                        }
-
-                        if( this->iteradorSaidaAnalisadorLexico->second.token == ";" )
-                        {
-                                _parteDeclaracoesRotulos->insereFilho( this->iteradorSaidaAnalisadorLexico->second.token, this->nivelLexicoAtual, true );
-                                ++this->iteradorSaidaAnalisadorLexico;
-                        }
-                        else
-                        {
-                                LogErros::getInstancia().insereErro( this->iteradorSaidaAnalisadorLexico->second.linha, "Esperado: ';'" );
-                        }
-                }
-                else
-                {
-                        LogErros::getInstancia().insereErro( this->iteradorSaidaAnalisadorLexico->second.linha, "Esperado: numero apos 'label'" );
-                }
-        }
-        else
-        {
-                return NULL;
-        }
-
-        return _parteDeclaracoesRotulos;
-}
 void AnalizadorSintatico::erro(int linha, QString msg)
 {
         this->errors.append("Linha "+QString::number(linha)+" - "+msg);
