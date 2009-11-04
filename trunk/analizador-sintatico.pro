@@ -8,9 +8,11 @@ SOURCES += main.cpp \
     notype.cpp \
     analizadorsintatico.cpp \
     tokens.cpp \
-    qmyhash.cpp
+    qmyhash.cpp \
+    hashconteudo.cpp
 HEADERS += arvoresintatica.h \
     notype.h \
     analizadorsintatico.h \
     tokens.h \
-    qmyhash.h
+    qmyhash.h \
+    hashconteudo.h

@@ -12,9 +12,10 @@ void Transforma(QFile &arquivo, QList<Tokens*> *tokens);
 void MostrarArvoreSintatica(ArvoreSintatica *ar);
 int main(int argc, char *argv[])
 {
-
+    QString fileName = "../AnalizadorLexico/saida.out";
+    if(argc >1 )fileName = argv[1];
     QApplication a(argc, argv);
-    QFile f("../AnalizadorLexico/saida.out");
+    QFile f(fileName);
     f.open( QIODevice::ReadOnly);
     QList<Tokens*> l;
     Transforma(f,&l);
@@ -52,7 +53,10 @@ void Transforma(QFile &arquivo, QList<Tokens*> * tokens)
             temp->linha = lineCount;
             tsLine>>temp->Classificacao;
             tsLine>>temp->token;
-            tokens->append(temp);
+            if(!temp->token.isEmpty()){
+                tokens->append(temp);
+                qDebug()<<temp->token<<" - "<<temp->Classificacao;
+            }
         }
 
     }
