@@ -44,14 +44,21 @@ void NoType::setIsTerminal(bool terminal)
 //-----------------------------------------------------------------------------------------
 void NoType::insereFilho(NoType * filho)
 {
-    this->filhos.append(filho);
+    if(filho != NULL)
+        this->filhos.append(filho);
+}
+//-----------------------------------------------------------------------------------------
+void NoType::insereFilho(QString descr, int nvLex, bool term)
+{
+    this->insereFilho(new NoType(descr,nvLex, term));
 }
 //-----------------------------------------------------------------------------------------
 void NoType::print()
 {
     qDebug()<<this->getDescricao();
     for(int i=0;i<this->filhos.count();i++){
-        filhos[i]->print();
+        if(filhos[i]!=NULL)
+            filhos[i]->print();
     }
 }
 //-----------------------------------------------------------------------------------------
@@ -62,8 +69,10 @@ void NoType::toTree(QTreeWidgetItem *item)
     item->setText(2,(this->isTerminal ? "sim":"nao"));
     for(int i=0;i<this->filhos.count();i++){
         QTreeWidgetItem * temp = new QTreeWidgetItem();
-        filhos[i]->toTree(temp);
-        item->addChild(temp);
+        if(filhos[i]!=NULL){
+            filhos[i]->toTree(temp);
+            item->addChild(temp);
+        }
     }
 
 }

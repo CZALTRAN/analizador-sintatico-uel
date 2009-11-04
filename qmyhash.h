@@ -6,15 +6,25 @@
 
 #include <QMultiHash>
 #include <QString>
-uint qHash(){
+#include "hashconteudo.h"
+#include <QDebug>
 
-}
 
-class QMyHash:public QMultiHash<QString,int>
+class KeyHash{
+public:
+    KeyHash(QString k);
+    QString key;
+    bool operator ==(const KeyHash &outro)const;
+};
+
+uint qHash(KeyHash k);
+
+class QMyHash:public QMultiHash<KeyHash,HashConteudo * >
 {
 public:
     QMyHash();
-
+    bool exists(QString identificador, int escopo, int nvLexico);
+    void print();
 };
 
 

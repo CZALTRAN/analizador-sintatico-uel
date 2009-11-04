@@ -20,6 +20,7 @@ public:
     void setIsTerminal(bool terminal);
 
     void insereFilho(NoType * filho);
+    void insereFilho(QString descr="", int nvLex=0, bool term = false);
     void print();
     void toTree(QTreeWidgetItem * item);
 private:
