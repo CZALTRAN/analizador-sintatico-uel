@@ -1,0 +1,1 @@
+Analizador sintatico em QT C++
